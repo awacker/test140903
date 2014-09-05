@@ -74,8 +74,8 @@ function models_list() {
         	for (var model in data) {
         		$('#m_list').append('<li><a href="#">'+model+'</a></li>');
         	} 
-    		$('#m_list').click(function(e) { 
-    			get_model_structure(e.target.innerText)
+    		$('#m_list').click(function(e) {
+    			get_model_structure(e);
     		});        	       	
          } 
  	});
@@ -297,7 +297,9 @@ function new_record_success(e, data, model) {
 }
 
 
-function get_model_structure(model) {
+function get_model_structure(e) {
+	var model = e.target.innerHTML;	
+	console.log(model);
  	$.ajax({
         url: '/rest_api/'+model+'/?format=json',
         global: false,
