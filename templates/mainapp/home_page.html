@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load staticfiles %}
+	<title>test</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="{% static "css/mainapp_extension.css" %}" type="text/css">
+	<script src="{% static "js/mainapp_extension.js" %}" type="text/javascript" charset="utf-8"></script> 
+
+ <!-- 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  
+  	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  	<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+</head>
+<body>	{% csrf_token %}
+
+<div class="wrapper">
+
+<div class="models_list"> Models
+	<ul id="m_list">
+		<script>models_list();</script>
+	</ul>
+</div>
+<div class="model_content"></div>
+</div>
+
+<div class="message_box"></div>
+</body>
+</html>

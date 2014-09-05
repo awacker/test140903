@@ -1,0 +1,21 @@
+div.wrapper {
+width:450px;
+}
+div.models_list {
+float:left;
+width:200px;
+border: solid 5px #fff; 
+outline: solid 5px #888;  
+}
+div.model_content {
+float:right;
+width:200px;
+
+}
+
+div.message_box {
+	float: left;
+	padding-top: 30px; 
+ 	white-space: nowrap;
+	color: red;
+}
