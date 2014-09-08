@@ -160,9 +160,6 @@ function on_change(e, model) {
 					ent += ',\n'
 				}      						
 				fs[i] = k;
-    			if (!isValid(fs)){ 				
-    				return;
-    			}
     			if ($(k).attr('field-type') =='datetime') {
     				v = k.value + ' 00:00:00';
     			} else {
@@ -172,6 +169,9 @@ function on_change(e, model) {
 			}	
 		}
 		ent += '}';
+		if (!isValid(fs)){ 				
+    			return;
+    		}
 	
 		//console.log($(e.currentTarget)); 
 		if ($(e.currentTarget).attr('id')) {
