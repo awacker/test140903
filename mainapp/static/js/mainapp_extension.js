@@ -126,21 +126,30 @@ function isValid(fields) {
 	
 }
 
-
-function row_click(e){  
-	$(e.target).prop("disabled", true);            		
+function on_focusout_datepicker(dateText, inst){
+	if ($(inst.input[0]).attr('class') == 'new_row datepicker hasDatepicker'){
+		return;
+	}
+	$(inst.input[0]).prop("disabled", true);
 	}
 
-function tr_click(e) {       		
+function on_focusout(e){  	
+	$(e.target).prop("disabled", true);  
+
+	}
+
+function on_click(e) {       		
 
 		if ($(e.target).attr("disabled")) {
     			$(e.target).prop("disabled", false);
     			$(e.target).focus();
+
 			}   		
 	}
 	
-function tr_change(e, model) {   
-		
+function on_change(e, model) {   
+	console.log('on_change');
+	console.log($(e.currentTarget)); 
 		var kids = e.currentTarget.childNodes;		
 		var ent='{'
 		fs = [];
@@ -205,7 +214,7 @@ function model_view_success(data, model, attributes) {
 				} else {
 					if (attributes[k].type == "datetime") {
 						var v = dateFormat(data[i][k])
-						var cl = 'datepicker'
+						var cl = 'row datepicker'
 					} else {
 						v = data[i][k]
 						var cl = 'row'
@@ -258,16 +267,21 @@ function model_view_success(data, model, attributes) {
     	});
 	
 
-	$('tr').bind('click', (function(e){tr_click(e)}));       	
-	$('.row').bind('focusout', (function(e){row_click(e)}));
-	$('.records').bind('change', (function(e){tr_change(e, model)}));
-	$(function() {$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });});    
+	$('tr').bind('click', (function(e){on_click(e)}));       	
+	$('.row').bind('focusout', (function(e){on_focusout(e)}));
+	$('.records').bind('change', (function(e){on_change(e, model)}));
+	$(function() {$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd', beforeShow: function (input, inst) {
+	    $(this).off('focusout');
+	 },onClose: function (dateText, inst) {
+	     $(this).on('focusout',on_focusout_datepicker(dateText, inst));
+	 }}			
+	);});  
 	
 }
 
 function new_record_success(e, data, model) {
 	var attributes = document.getElementsByClassName('t_header');
-	var html ='<tr id='+data['id']+'>'		
+	var html ='<tr class="records" id='+data['id']+'>'		
 		var k = 0
     	for (var i in data) {
     				if (i == 'id') {
@@ -288,12 +302,15 @@ function new_record_success(e, data, model) {
 				
 		$("#list_table").append(html);
 		
-        $('tr').bind('click', (function(e){tr_click(e)}));       	
-        $('.row').bind('focusout', (function(e){row_click(e)}));
-        $('.records').bind('change', (function(e){tr_change(e, model)}));
-        $(function() {$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });});  
-
-	//	console.log('New record to model' + model);		
+        $('tr').bind('click', (function(e){on_click(e)}));       	
+        $('.row').bind('focusout', (function(e){on_focusout(e)}));
+        $('.records').bind('change', (function(e){on_change(e, model)}));
+    	$(function() {$( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd', beforeShow: function (input, inst) {
+    	    $(this).off('focusout');
+    	 },onClose: function (dateText, inst) {
+    	     $(this).on('focusout',on_focusout_datepicker(dateText, inst));
+    	 }}			
+    	);});  	
 }
 
 
